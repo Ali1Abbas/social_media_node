@@ -1,0 +1,8 @@
+{
+    "apps": [
+        {
+            "name": "FlutterWEBRTCNODE",
+            "script": "index.js"
+        }
+    ]
+}
