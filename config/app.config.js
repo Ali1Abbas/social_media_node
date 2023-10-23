@@ -8,7 +8,7 @@ const pool = new Client({
 
 
 
-// const MONGO_DB_CONFIG = {
+// const mONGO_DB_CONFIG = {
 //     DB: "mongodb+srv://aliabbas:ro7Ik6zoC5nmWg4w@cluster0.m4bwaua.mongodb.net/?retryWrites=true&w=majority"
 // };
 
