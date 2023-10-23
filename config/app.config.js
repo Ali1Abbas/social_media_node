@@ -1,3 +1,10 @@
+const pool = new Client({
+  user: 'postgres',
+  host: 'localhost',
+  database: 'postgres',
+  password: 'password',
+  port: 5434,
+});
 
 
 
@@ -6,19 +13,8 @@
 // };
 
 module.exports = {
+  pool
 
-    HOST: "localhost",
-    USER: "postgres",
-    PASSWORD: "password",
-    DB: "postgres",
-    dialect: "postgres",
-    pool: {
-      max: 5,
-      min: 0,
-      acquire: 30000,
-      idle: 10000
-    }
-    
 }
 
 //mongodb+srv://abbasa487567:eKXBBSNSGRVhSGIS@cluster0.m4bwaua.mongodb.net/?retryWrites=true&w=majo

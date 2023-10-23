@@ -21,27 +21,27 @@ initMeetingserver.initMeetingServer(server)
 
 
 
-// // mongoose
-// //     .connect("mongodb+srv://aliabbas:ro7Ik6zoC5nmWg4w@cluster0.m4bwaua.mongodb.net/?retryWrites=true&w=majority", {
-// //         usenewurlparser: true,
-// //         useunifiedtopology: true,
-// //     })
-// //     .then(() => {
-// //         console.log("Successfully connected ");
-// //     })
-// //     .catch((error) => {
-// //         console.log(`can not connect to database, ${error}`);
-// //     });
-// // app.use(express.json());
-// // app.use("/api", require("./routes/app.routes"))
+// // // mongoose
+// // //     .connect("mongodb+srv://aliabbas:ro7Ik6zoC5nmWg4w@cluster0.m4bwaua.mongodb.net/?retryWrites=true&w=majority", {
+// // //         usenewurlparser: true,
+// // //         useunifiedtopology: true,
+// // //     })
+// // //     .then(() => {
+// // //         console.log("Successfully connected ");
+// // //     })
+// // //     .catch((error) => {
+// // //         console.log(`can not connect to database, ${error}`);
+// // //     });
+// // // app.use(express.json());
+// // // app.use("/api", require("./routes/app.routes"))
 
-// // server.listen(process.env.port || 4000, function () {
-// //     console.log("ready to go");
+// // // server.listen(process.env.port || 4000, function () {
+// // //     console.log("ready to go");
 
-// // })
+// // // })
 
 
-const { Client } = require('pg');
+// const { Client } = require('pg');
 
 
 const pool = new Client({
@@ -49,7 +49,7 @@ const pool = new Client({
     host: 'localhost',
     database: 'postgres',
     password: 'password',
-    port: 5433,
+    port: 5434,
 });
 
 pool.connect();
@@ -75,111 +75,54 @@ pool.query(`Select * from meetings`, (err, res) => {
 
 
 
-// const appConfig = require("./config/app.config");
-// const dbConfig = require("./config/app.config");
+// // const appConfig = require("./config/app.config");
+// // const dbConfig = require("./config/app.config");
 
-// const Sequelize = require("sequelize");
-// const sequelize = new Sequelize(appConfig.DB, appConfig.USER, appConfig.PASSWORD, {
-//     host: appConfig.HOST,
-//     dialect: appConfig.dialect,
-//     operatorsAliases: false,
+// // const Sequelize = require("sequelize");
+// // const sequelize = new Sequelize(appConfig.DB, appConfig.USER, appConfig.PASSWORD, {
+// //     host: appConfig.HOST,
+// //     dialect: appConfig.dialect,
+// //     operatorsAliases: false,
 
-//     pool: {
-//         max: appConfig.pool.max,
-//         min: appConfig.pool.min,
-//         acquire: appConfig.pool.acquire,
-//         idle: appConfig.pool.idle
-//     }
+// //     pool: {
+// //         max: appConfig.pool.max,
+// //         min: appConfig.pool.min,
+// //         acquire: appConfig.pool.acquire,
+// //         idle: appConfig.pool.idle
+// //     }
+// // });
+
+// // const db = {};
+
+// // db.Sequelize = Sequelize;
+// // db.sequelize = sequelize;
+
+// // db.tutorials = require("./model/metting.model")(sequelize, Sequelize);
+
+// // module.exports = db;
+
+
+
+
+// // failure
+// app.get('/auth/google/callback/failure', (req, res) => {
+//     res.send("Error");
+// })
+
+// app.listen(3000, () => {
+//     console.log("Server Running on port 3000");
 // });
+// const express = require('express');
+// const { Server } = require('ws');
 
-// const db = {};
+// const PORT = process.env.PORT || 3000;
 
-// db.Sequelize = Sequelize;
-// db.sequelize = sequelize;
+// const server = express().use((req, res) => res.send('Hello World')).listen(PORT, () => console.log(`Listening on ${PORT}`));
 
-// db.tutorials = require("./model/metting.model")(sequelize, Sequelize);
+// const wss = new Server({ server });
 
-// module.exports = db;
-
-
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth2').Strategy;
-
-passport.serializeUser((user, done) => {
-    done(null, user);
-})
-passport.deserializeUser(function (user, done) {
-    done(null, user);
-});
-passport.use(
-    new GoogleStrategy(
-        {
-            clientID: '888833156940-8e3tddn6333k2dlg7v4jqiriv8sgn7nh.apps.googleusercontent.com',
-            clientSecret: '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',
-            callbackURL: 'http://localhost:3000/auth/google/callback',
-            passReqToCallback: true
-        },
-        (request, accessToken, refreshToken, profile, done) => {
-            // Handle user authentication here (e.g., save user to your database)
-            console.log(profile);
-            return done(null, profile);
-
-        }
-    )
-);
-const cookieSession = require('cookie-session');
-
-
-app.use(cookieSession({
-    name: 'google-auth-session',
-    keys: ['key1', 'key2']
-}));
-app.use(passport.initialize());
-app.use(passport.session());
-
-
-app.get('/', (req, res) => {
-    res.send("<button><a href='/auth/google/'>Login With Google</a></button>")
-});
-
-// Auth
-app.get('/auth/google', passport.authenticate('google', {
-    scope:
-        ['email', 'profile']
-}));
-
-// Auth Callback
-app.get('/auth/google/callback',
-    passport.authenticate('google', {
-        successRedirect: '/auth/google/callback/success',
-        failureRedirect: '/auth//google/callback/failure'
-    }));
-
-// Success
-app.get('/auth/google/callback/success', (req, res) => {
-    if (!req.user)
-        res.redirect('/auth/google/callback/failure');
-    res.send("Welcome " + req.user.email);
-    app.use('auth/google/create/', res, req => {
-        pool.query(`Insert  into meetings(hostId) VALUES(${req.user.email})`)
-        app.use(express.json());
-
-        return res.status(200).send({ message: "success", data: res });
-
-
-
-    })
-
-});
-
-
-
-
-// failure
-app.get('/auth/google/callback/failure', (req, res) => {
-    res.send("Error");
-})
-
-app.listen(3000, () => {
-    console.log("Server Running on port 3000");
-});
+// wss.on('connection', ws => {
+//     console.log('Client connected');
+//     ws.on('message', message => console.log(`Received: ${message}`));
+//     ws.on('close', () => console.log('Client disconnected'));
+// });
